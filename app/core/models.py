@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
+import datetime
+
 class UserManager(BaseUserManager):
 
     def create_user(self, email, password=None, **extra_fields):
@@ -26,8 +28,18 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """Custom user model that support using email instead of username"""
+
+    GENDER_CHOICES = (
+        ('male', 'male'),
+        ('female', 'female'),
+        ('-','-')
+    )
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
+    weight = models.FloatField(default=0.0)
+    height = models.FloatField(default=0.0)
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, default='-')
+    birth = models.DateField(default=datetime.date.today)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
