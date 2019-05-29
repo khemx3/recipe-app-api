@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.conf import settings
 
 import datetime
+
 
 class UserManager(BaseUserManager):
 
@@ -40,9 +42,22 @@ class User(AbstractBaseUser, PermissionsMixin):
     height = models.FloatField(default=0.0)
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, default='-')
     birth = models.DateField(default=datetime.date.today)
+    goal = models.IntegerField(default=0)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+
+# class UserTrack(models.Model):
+#     """Track to be use for user"""
+#     user = models.ForeignKey(
+#         settings.AUTH_USER_MODEL,
+#         on_delete=models.CASCADE
+#     )
+#     date = models.DateField(default=datetime.date.today)
+
+
+
+    
