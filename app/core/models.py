@@ -27,14 +27,13 @@ class UserManager(BaseUserManager):
         return user
 
 
-
 class User(AbstractBaseUser, PermissionsMixin):
     """Custom user model that support using email instead of username"""
 
     GENDER_CHOICES = (
         ('male', 'male'),
         ('female', 'female'),
-        ('-','-')
+        ('-', '-')
     )
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
@@ -50,14 +49,28 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
 
-# class UserTrack(models.Model):
-#     """Track to be use for user"""
-#     user = models.ForeignKey(
-#         settings.AUTH_USER_MODEL,
-#         on_delete=models.CASCADE
-#     )
-#     date = models.DateField(default=datetime.date.today)
+
+class Tag(models.Model):
+    """Tag to be used for a recipe"""
+    name = models.CharField(max_length=255)
+    calories = models.IntegerField()
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+
+    def __str__(self):
+        return self.name
 
 
+class Recipe(models.Model):
+    """Recipe object"""
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    date = models.DateField()
+    tags = models.ManyToManyField('Tag')
 
-    
+    def __str__(self):
+        return self.date
