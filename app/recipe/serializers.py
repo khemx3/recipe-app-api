@@ -14,12 +14,12 @@ class TagSerializer(serializers.ModelSerializer):
 class RecipeSerializer(serializers.ModelSerializer):
     """Serialize a recipe"""
 
-    # tags = serializers.PrimaryKeyRelatedField(
-    #     many=True,
-    #     queryset=Tag.objects.all()
-    # )
+    tags = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Tag.objects.all()
+    )
 
-    tags = TagSerializer(many=True, read_only=True)
+    # tags = TagSerializer(many=True, read_only=True)
     class Meta:
         model = Recipe
         fields = (
