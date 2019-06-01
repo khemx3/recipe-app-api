@@ -8,7 +8,7 @@ class TagSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tag
-        fields = ('name', 'calories')
+        fields = ('id', 'name', 'calories')
         
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -23,7 +23,7 @@ class RecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recipe
         fields = (
-            'date', 'tags'
+            'id', 'date', 'tags'
         )
         # read_only_fields = ('id',)
 
